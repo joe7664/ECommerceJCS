@@ -60,6 +60,16 @@ public class ECommerceController {
         return eCommerceService.getAllProducts();
     }
 
+    @GetMapping("/product/{productId}")
+    public Product getProductById(@PathVariable long productId){
+        return eCommerceService.getProductById(productId);
+    }
+
+    @GetMapping("/cart/{accountId}")
+    public List<Product> getCart(@PathVariable long accountId){
+        return eCommerceService.getCart(accountId);
+    }
+
     @PostMapping("/cart/{accountId}/{productId}")
     public ResponseEntity<?> postProductToCart(@PathVariable long accountId, @PathVariable long productId){
         eCommerceService.addToCart(accountId, productId);
