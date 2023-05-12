@@ -43,6 +43,11 @@ public class ECommerceController {
         }
     }
 
+    @GetMapping("/users")
+    public List<Account> getAllUsers(){
+        return eCommerceService.getAllAccounts();
+    }
+
     @PostMapping("/product")
     public ResponseEntity<?> postProduct(@RequestBody Product product){
         Product existing = eCommerceService.getProductByName(product.getProductName());
@@ -74,6 +79,12 @@ public class ECommerceController {
     public ResponseEntity<?> postProductToCart(@PathVariable long accountId, @PathVariable long productId){
         eCommerceService.addToCart(accountId, productId);
         return ResponseEntity.ok("Item added to cart");
+    }
+
+    @PatchMapping("/cart/{accountId}/{productId}/{quantity}")
+    public ResponseEntity<?> patchCartQuantity(@PathVariable long accountId, @PathVariable long productId, @PathVariable int quantity){
+        eCommerceService.patchQuantity(accountId, productId, quantity);
+        return ResponseEntity.ok("Item quantity updated");
     }
 
     @DeleteMapping("/cart/{accountId}")

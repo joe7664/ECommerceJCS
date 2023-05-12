@@ -22,8 +22,8 @@ public class Product {
     private String description;
     @Column
     private double price;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    //@JsonManagedReference
-//    Account account;
+    @Column
+    private int quantity;
+    @Column
+    private double subTotal;
 }

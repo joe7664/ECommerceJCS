@@ -42,6 +42,10 @@ public class ECommerceService {
         return account;
     }
 
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -68,10 +72,33 @@ public class ECommerceService {
         Product product = productRepository.findProductByProductId(productId);
         if(product!=null){
             List<Product> products=account.getProducts();
+            if(!products.contains(product)){
+                product.setQuantity(1);
+            }else{
+                product.setQuantity(product.getQuantity()+1);
+            }
             products.add(product);
             account.setProducts(products);
             accountRepository.save(account);
         }
+        return account.getProducts();
+    }
+
+    public List<Product> patchQuantity(long accountId, long productId, long quantity){
+        Account account = accountRepository.findAccountByAccountId(accountId);
+        List<Product> products=account.getProducts();
+        for(int i=0; i<products.size(); i++){
+            if(products.get(i).getProductId()==productId){
+                if(quantity==0){
+                    products.remove(i);
+                }else {
+                    products.get(i).setQuantity((int) quantity);
+                }
+                break;
+            }
+        }
+        account.setProducts(products);
+        accountRepository.save(account);
         return account.getProducts();
     }
 

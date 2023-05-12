@@ -20,8 +20,6 @@ public class Account {
     private String email;
     @Column
     private String password;
-    @Column
-    private double totalPrice;
 
     @OneToMany(fetch = FetchType.EAGER)
     //@JsonManagedReference
